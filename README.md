@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# RSU Calculator
+
+A multi-company RSU (Restricted Stock Unit) vesting value calculator. Enter your grant details and see your current vested/unvested value based on live stock prices.
+
+**Live demo:** https://rsu-calculator-tawny.vercel.app
+
+## Features
+
+- Built-in vesting schedules for Amazon, Google, Meta, NVIDIA, Netflix, Microsoft, Apple
+- Amazon: auto-calculates shares using the 30-trading-day trailing average price from your onboard date
+- Live stock prices via Alpha Vantage (with Yahoo Finance fallback)
+- Historical price chart with vest date markers
+- Multiple grants per company with expandable timelines
+- Stock appreciation/depreciation vs. original grant value
+- Private company support (ByteDance, Databricks, etc.) with manual price entry
+- Add custom companies with 6 built-in vesting schedule templates
+- Data persists in browser localStorage
 
 ## Getting Started
 
-First, run the development server:
+### 1. Get a free Alpha Vantage API key
+
+Sign up at https://www.alphavantage.co/support/#api-key (free, 25 requests/day).
+
+### 2. Set up environment variables
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.local.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Edit `.env.local`:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+ALPHA_VANTAGE_API_KEY=your_api_key_here
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> If the key is missing or rate-limited, the app automatically falls back to Yahoo Finance — the app still works without a key.
 
-## Learn More
+### 3. Run the development server
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm install
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploying to Vercel
 
-## Deploy on Vercel
+```bash
+vercel --prod
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Add the environment variable in Vercel dashboard or via CLI:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+echo "your_api_key" | vercel env add ALPHA_VANTAGE_API_KEY production
+```
+
+## Tech Stack
+
+- **Next.js 14+ (App Router)** — framework + server-side API routes
+- **TypeScript + Tailwind CSS** — type safety and styling
+- **Recharts** — historical price chart
+- **Alpha Vantage + Yahoo Finance** — stock price data
+- **localStorage** — client-side persistence, no database needed
