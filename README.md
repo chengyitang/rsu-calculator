@@ -2,7 +2,7 @@
 
 A multi-company RSU (Restricted Stock Unit) vesting value calculator. Enter your grant details and see your current vested/unvested value based on live stock prices.
 
-**Live demo:** https://rsu-calculator-tawny.vercel.app
+**Live demo:** https://rsucalculator.vercel.app
 
 ## Features
 
